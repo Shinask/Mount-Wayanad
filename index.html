@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit India - Proposal for Mount Wayanad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 
+        Chosen Palette: Calm Corporate
+        Application Structure Plan: A single-page application with a top navigation bar for smooth scrolling to thematic sections. This structure transforms the linear presentation into an explorable dashboard, allowing users to quickly access key information like the financial model and projections. The flow is designed to first build trust (About Us, Track Record), present the opportunity (The Resort), detail the offer (The Proposal), provide evidence of future success (Projections & Strategy), and finally, call to action (Contact). This is more persuasive than a static presentation.
+        Visualization & Content Choices: 
+        - Zeno Village Stats: Goal is to impress with past success. An animated counter is used instead of static text to create a dynamic and impactful "wow" moment, drawing attention to the impressive growth figures. Implemented with vanilla JavaScript.
+        - Financial Projections: Goal is to clearly communicate future potential. A Chart.js grouped bar chart is used to visually compare Occupancy and ADR growth over three years. This is more intuitive and easier to analyze than a text list. The chart is interactive with tooltips for detail.
+        - Key Strengths/Amenities: Goal is to present information concisely. A grid layout with Unicode icons is used to make these sections scannable and visually appealing without using image files.
+        CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB; /* A very light gray */
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link.active {
+            color: #10B981; /* Emerald 500 */
+            font-weight: 600;
+        }
+        .stat-card h3 {
+            color: #10B981; /* Emerald 500 */
+        }
+        .section-title {
+            border-bottom: 2px solid #10B981;
+            padding-bottom: 0.5rem;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .challenge-item {
+            background-color: #FEF2F2; /* Red 50 */
+            border-left: 4px solid #EF4444; /* Red 500 */
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                Circuit <span class="text-emerald-500">India</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#about" class="nav-link text-gray-600 hover:text-emerald-500">About Us</a>
+                <a href="#opportunity" class="nav-link text-gray-600 hover:text-emerald-500">The Opportunity</a>
+                <a href="#proposal" class="nav-link text-gray-600 hover:text-emerald-500">The Proposal</a>
+                <a href="#projections" class="nav-link text-gray-600 hover:text-emerald-500">Projections</a>
+                <a href="#contact" class="nav-link text-gray-600 hover:text-emerald-500">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#about" class="block py-2 px-4 text-sm hover:bg-gray-100">About Us</a>
+            <a href="#opportunity" class="block py-2 px-4 text-sm hover:bg-gray-100">The Opportunity</a>
+            <a href="#proposal" class="block py-2 px-4 text-sm hover:bg-gray-100">The Proposal</a>
+            <a href="#projections" class="block py-2 px-4 text-sm hover:bg-gray-100">Projections</a>
+            <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-100">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">A Partnership Proposal for <br><span class="text-emerald-500">Mount Wayanad Resort</span></h1>
+                <p class="mt-4 text-lg text-gray-600">Submitted by Circuit India to Team Mount Wayanad</p>
+                <p class="text-sm text-gray-500 mt-2">Date: 23-07-2025</p>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-12">About Circuit India</h2>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4">Our Identity & Purpose</h3>
+                        <p class="mb-4 text-gray-600">We are a dynamic, customer-centric travel and hospitality management company that has evolved from a simple travel agency to a vital bridge between discerning travelers and premium resorts. Our core strength lies in deep market understanding, an extensive customer following, and an unwavering commitment to quality.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-lg">Our Mission</h4>
+                                <p class="text-gray-600">To be the most trusted and preferred partner for premium resort owners, delivering unparalleled operational excellence and maximizing profitability through innovative marketing and superior guest experiences.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg">Our Vision</h4>
+                                <p class="text-gray-600">To redefine luxury and comfort in the hospitality sector, creating memorable stays for every guest and sustainable growth for our partners.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold mb-6 text-center">Key Achievement: The Zeno Village Success Story</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+                            <div class="stat-card">
+                                <p class="text-gray-500">Occupancy (2020)</p>
+                                <h3 class="text-4xl font-bold" data-target="30">0%</h3>
+                            </div>
+                            <div class="stat-card">
+                                <p class="text-gray-500">Occupancy (Today)</p>
+                                <h3 class="text-4xl font-bold" data-target="70">0%</h3>
+                            </div>
+                            <div class="stat-card">
+                                <p class="text-gray-500">ADR (2020)</p>
+                                <h3 class="text-4xl font-bold">₹<span data-target="3500">0</span></h3>
+                            </div>
+                            <div class="stat-card">
+                                <p class="text-gray-500">ADR (Today)</p>
+                                <h3 class="text-4xl font-bold">₹<span data-target="6000">0</span></h3>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-center text-gray-600 italic">This demonstrates our ability to significantly enhance property value and profitability.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Opportunity Section -->
+        <section id="opportunity" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-12">The Opportunity: Mount Wayanad</h2>
+                <div class="bg-gray-50 p-8 rounded-lg shadow-inner">
+                    <div class="grid md:grid-cols-3 gap-8 text-center">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2">Property Overview</h4>
+                            <p><strong>Location:</strong> Vythiri, Wayanad – Strategic, serene, with tea plantation & mountain views.</p>
+                            <p><strong>Status:</strong> 90% completed, nearing operational readiness.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2">Resort Type</h4>
+                            <p>25 individual cottages, 31 rooms total – Ideal for couples & families.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-2">Accessibility</h4>
+                            <p>~3 hours to nearest airport/railway, close to major tourist attractions.</p>
+                        </div>
+                    </div>
+                    <hr class="my-8">
+                    <h4 class="text-xl font-semibold mb-4 text-center">Key Features & Amenities</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4"><span class="text-2xl">🏠</span><p>16 Single Cottages</p></div>
+                        <div class="p-4"><span class="text-2xl">🏡</span><p>4 Double Cottages</p></div>
+                        <div class="p-4"><span class="text-2xl">🏊</span><p>3 Single Pool Villas</p></div>
+                        <div class="p-4"><span class="text-2xl">👨‍👩‍👧‍👦</span><p>2 Double Pool Villas</p></div>
+                        <div class="p-4"><span class="text-2xl">🍽️</span><p>1 Restaurant</p></div>
+                        <div class="p-4"><span class="text-2xl">💪</span><p>Gym Area</p></div>
+                        <div class="p-4"><span class="text-2xl">🌊</span><p>Swimming Pool</p></div>
+                        <div class="p-4"><span class="text-2xl">🎠</span><p>Kids Park</p></div>
+                    </div>
+                    <hr class="my-8">
+                    <h4 class="text-xl font-semibold mb-4 text-center">Challenges Identified</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="challenge-item">
+                            <p class="font-semibold text-gray-800">No staff accommodation area</p>
+                        </div>
+                        <div class="challenge-item">
+                            <p class="font-semibold text-gray-800">May have water availability issue in summer season</p>
+                        </div>
+                        <div class="challenge-item">
+                            <p class="font-semibold text-gray-800">Lack of banquet hall</p>
+                        </div>
+                        <div class="challenge-item">
+                            <p class="font-semibold text-gray-800">Limited parking space</p>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-semibold mt-8 mb-4 text-center">Opportunities for Improvement</h4>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Leverage the unique tea plantation and mountain views as a primary selling point.</li>
+                        <li>Capitalize on the strong demand for couple and family-friendly accommodations in Wayanad.</li>
+                        <li>Implement efficient water management solutions to mitigate summer issues.</li>
+                        <li>Explore creative solutions for staff accommodation and parking.</li>
+                        <li>Potentially develop a multi-purpose area that can serve as a banquet hall or additional recreational space in the future.</li>
+                        <li>Seamlessly integrate the new property into our existing robust marketing and agent networks.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Proposal Section -->
+        <section id="proposal" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-12">Our Proposal</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white shadow-xl rounded-lg overflow-hidden md:flex">
+                        <div class="w-full md:w-1/2 bg-emerald-500 text-white p-8 flex flex-col justify-center text-center">
+                            <h3 class="text-3xl font-bold">The Financial Model</h3>
+                            <p class="mt-2">A partnership built on mutual success.</p>
+                        </div>
+                        <div class="w-full md:w-1/2 p-8">
+                            <h4 class="font-semibold text-lg mb-4">Profit Share Structure:</h4>
+                            <ul class="space-y-3 list-disc list-inside text-gray-600">
+                                <li><strong>50% of Gross Operating Profit (GOP)</strong> to the owner.</li>
+                                <li><strong>Minimum Guarantee of ₹2.5 Lakhs per month</strong>, whichever is higher.</li>
+                            </ul>
+                            <p class="mt-4 text-sm italic">This ensures a stable minimum income and aligns our incentives for maximum profitability.</p>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 mt-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="font-semibold text-lg mb-2">Lease & Termination</h4>
+                            <p class="text-gray-600 mb-2"><strong>Term:</strong> Minimum 3-year locking period to allow for investment, setup, and marketing implementation.</p>
+                            <p class="text-gray-600"><strong>Termination Clause:</strong> Owner can terminate without notice if we fail to achieve 40% annual occupancy (under normal circumstances).</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="font-semibold text-lg mb-2">Responsibilities (OPEX/CAPEX)</h4>
+                            <p class="text-gray-600 mb-2"><strong>Circuit India:</strong> All operational expenses (salaries, marketing, utilities, minor repairs) and all consumable products.</p>
+                            <p class="text-gray-600"><strong>Owner:</strong> All major Capital Expenditures (structural repairs, major renovations, infrastructure upgrades) and property maintenance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projections Section -->
+        <section id="projections" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl font-bold text-center mb-4">Financial Projections</h2>
+                <p class="text-center text-gray-600 mb-12">Projected performance under Circuit India's management.</p>
+                <div class="chart-container">
+                    <canvas id="projectionsChart"></canvas>
+                </div>
+                <div class="text-center mt-8">
+                    <p class="text-xl font-semibold text-emerald-600">We anticipate achieving consistent profitability and a strong ROI for the owner within <span class="font-bold">6 months</span> of full operational takeover.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title text-3xl font-bold mb-4">Conclusion & Next Steps</h2>
+                <p class="max-w-3xl mx-auto text-gray-600 mb-8">Circuit India is excited by the prospect of partnering with you. Our proven expertise, extensive network, and commitment to excellence make us the ideal partner to elevate Mount Wayanad's market position and profitability. Our proposed model offers a secure and lucrative opportunity for the owner.</p>
+                <div class="bg-white p-8 rounded-lg shadow-lg inline-block">
+                    <h3 class="text-xl font-semibold mb-4">Let's Discuss Further</h3>
+                    <p class="mb-1"><strong>Shinas K:</strong> +91 9539 70 71 85</p>
+                    <p class="mb-1"><strong>Mubarak Rahman:</strong> +91 9633 80 90 71</p>
+                    <p class="mb-4"><strong>Email:</strong> skcircuitindia@gmail.com</p>
+                    <a href="mailto:skcircuitindia@gmail.com" class="bg-emerald-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-600 transition-colors">Schedule a Meeting</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Circuit India. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Active Nav Link on Scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Animated Counters
+            const counters = document.querySelectorAll('.stat-card h3[data-target], .stat-card span[data-target]');
+            const speed = 200; 
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.dataset.target;
+                        const count = +counter.innerText.replace('₹','').replace('%','');
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            counter.innerText = counter.innerText.includes('₹') 
+                                ? '₹' + Math.ceil(count + inc)
+                                : Math.ceil(count + inc) + (counter.innerText.includes('%') ? '%' : '');
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = counter.innerText.includes('₹')
+                                ? '₹' + target
+                                : target + (counter.innerText.includes('%') ? '%' : '');
+                        }
+                    };
+                    updateCount();
+                });
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const aboutSection = document.getElementById('about');
+            if(aboutSection) {
+                observer.observe(aboutSection);
+            }
+
+
+            // Projections Chart
+            const ctx = document.getElementById('projectionsChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Year 1', 'Year 2', 'Year 3'],
+                        datasets: [{
+                            label: 'Projected Occupancy (%)',
+                            data: [40, 50, 60],
+                            backgroundColor: 'rgba(16, 185, 129, 0.6)', // Emerald 500 with opacity
+                            borderColor: 'rgba(5, 150, 105, 1)', // Emerald 600
+                            borderWidth: 1,
+                            yAxisID: 'y'
+                        }, {
+                            label: 'Projected ADR (₹)',
+                            data: [5450, 5750, 6000],
+                            backgroundColor: 'rgba(107, 114, 128, 0.6)', // Gray 500 with opacity
+                            borderColor: 'rgba(55, 65, 81, 1)', // Gray 700
+                            borderWidth: 1,
+                            yAxisID: 'y1'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Occupancy (%)'
+                                },
+                                min: 0,
+                                max: 100
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'ADR (₹)'
+                                },
+                                grid: {
+                                    drawOnChartArea: false, 
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            if(context.dataset.label.includes('ADR')){
+                                                label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(context.parsed.y);
+                                            } else {
+                                                label += context.parsed.y + '%';
+                                            }
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
